@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AnotherJisho</string>
+    <string name="type_your_query_here">Type your query here</string>
+    <string name="search">Search</string>
+</resources>
