@@ -30,6 +30,7 @@
 
         <RelativeLayout
             android:layout_width="0dp"
+            android:onClick="@{holder::onClickItem}"
             android:layout_height="match_parent"
             app:layout_constraintStart_toEndOf="parent">
 

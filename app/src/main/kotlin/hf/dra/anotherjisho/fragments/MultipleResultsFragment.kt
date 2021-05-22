@@ -6,17 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import hf.dra.anotherjisho.MainActivity
 import hf.dra.anotherjisho.adapters.WordsAdapter
 import hf.dra.anotherjisho.databinding.FragmentMultipleResultsBinding
+import hf.dra.anotherjisho.listeners.WordListener
 import hf.dra.anotherjisho.models.Word
 
-class MultipleResultsFragment(private val words: List<Word>) : Fragment() {
+class MultipleResultsFragment(private val words: List<Word>) : Fragment(), WordListener {
     companion object {
         val TAG = MultipleResultsFragment::class.java.simpleName
     }
 
     private val binding by lazy { FragmentMultipleResultsBinding.inflate(layoutInflater) }
-    private val adapter by lazy { WordsAdapter(requireContext(), words) }
+    private val adapter by lazy { WordsAdapter(requireContext(), words, this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,5 +39,10 @@ class MultipleResultsFragment(private val words: List<Word>) : Fragment() {
 
     fun onClickButton(v: View) {
         requireActivity().onBackPressed()
+    }
+
+    override fun onClickWord(word: Word) {
+        val fragment = DetailedFragment(word)
+        (requireActivity() as MainActivity).showFragment(fragment,DetailedFragment.TAG)
     }
 }

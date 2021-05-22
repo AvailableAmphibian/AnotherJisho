@@ -1,7 +1,6 @@
 package hf.dra.anotherjisho.adapters
 
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import hf.dra.anotherjisho.databinding.HolderWordBinding
 import hf.dra.anotherjisho.listeners.WordListener
@@ -20,7 +19,7 @@ class WordHolder(private val binding: HolderWordBinding, val listener: WordListe
     }
 
     fun onClickArrow(v: View){
-        val visible = binding.moreDataContainer.isVisible
+        val visible = binding.moreDataContainer.visibility == View.GONE
 
         binding.arrowTv.rotation = if (visible) 90F else 0F
         binding.moreDataContainer.visibility = if (visible) View.VISIBLE else View.GONE

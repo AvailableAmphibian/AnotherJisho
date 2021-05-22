@@ -7,7 +7,7 @@ import hf.dra.anotherjisho.dialog_fragments.LoadingDialog
 import hf.dra.anotherjisho.fragments.SearchFragment
 
 class MainActivity : AppCompatActivity() {
-    private val loadingDialog by lazy { LoadingDialog() }
+    private var loadingDialog:LoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +37,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showLoadingDialog() {
-        if (!loadingDialog.isVisible)
-            loadingDialog.show(supportFragmentManager, LoadingDialog.TAG)
+        if (loadingDialog == null || !loadingDialog!!.isVisible)
+            loadingDialog = LoadingDialog()
+            loadingDialog!!.show(supportFragmentManager, LoadingDialog.TAG)
     }
 
     fun dismissLoadingDialog() {
-        if (loadingDialog.isVisible)
-            loadingDialog.dismiss()
+        if (loadingDialog != null && loadingDialog!!.isVisible)
+            loadingDialog!!.dismiss()
     }
 }
