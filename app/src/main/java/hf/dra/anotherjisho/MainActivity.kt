@@ -3,9 +3,12 @@ package hf.dra.anotherjisho
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import hf.dra.anotherjisho.dialog_fragments.LoadingDialog
 import hf.dra.anotherjisho.fragments.SearchFragment
 
 class MainActivity : AppCompatActivity() {
+    private val loadingDialog by lazy { LoadingDialog() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,5 +34,15 @@ class MainActivity : AppCompatActivity() {
         transaction.addToBackStack(tag)
 
         transaction.commitAllowingStateLoss()
+    }
+
+    fun showLoadingDialog() {
+        if (!loadingDialog.isVisible)
+            loadingDialog.show(supportFragmentManager, LoadingDialog.TAG)
+    }
+
+    fun dismissLoadingDialog() {
+        if (loadingDialog.isVisible)
+            loadingDialog.dismiss()
     }
 }
