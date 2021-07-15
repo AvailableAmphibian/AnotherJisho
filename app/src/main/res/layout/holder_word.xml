@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,41 +14,153 @@
             type="hf.dra.anotherjisho.adapters.WordHolder" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margins"
+        android:padding="@dimen/small_margins">
 
         <TextView
-            android:id="@+id/arrow_tv"
+            android:id="@+id/tv_arrow"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:onClick="@{holder::onClickArrow}"
-            android:padding="10dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
+            android:padding="10dp"
             android:text="@string/arrow"
-            android:textSize="30sp"
+            android:textColor="@color/green_500"
+            android:textSize="@dimen/text_big"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/bottom_barrier"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/left_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="tv_arrow" />
+
+
+        <TextView
+            android:id="@+id/tv_word"
             android:layout_width="0dp"
-            android:onClick="@{holder::onClickItem}"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toEndOf="parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_reading"
+            android:layout_margin="@dimen/small_margins"
+            android:gravity="center"
+            android:text="@{word.showFirstWord()}"
+            android:textSize="@dimen/text_big"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_barrier"
+            app:layout_constraintEnd_toEndOf="@id/right_barrier"
+            app:layout_constraintStart_toStartOf="@id/left_barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="漫画研究会" />
 
-            <RelativeLayout
-                android:id="@+id/basic_data_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_reading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margins"
+            android:text="@{word.showFirstWordReading()}"
+            android:visibility="@{word.hideReadingContainer()}"
+            app:layout_constraintBottom_toTopOf="@id/tv_word"
+            app:layout_constraintEnd_toEndOf="@id/right_barrier"
+            app:layout_constraintStart_toStartOf="@id/left_barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="まんがけんきゅうかい" />
 
-            </RelativeLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.55" />
 
-            <RelativeLayout
-                android:id="@+id/more_data_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_sens"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margins"
+            android:gravity="center"
+            android:text="@{word.showFirstSense().showDefinitions()}"
+            android:textSize="@dimen/text_middle"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_barrier"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/right_barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="cylindrical slab of meat on a single bone (oft. depicted in manga, anime, etc.)" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/bottom_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_sens,tv_word" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/common_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/common_word"
+            android:visibility="@{word.showCommonTag()}"
+            app:chipBackgroundColor="@color/red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bottom_barrier" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/jlpt_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{word.jlpt[0]}"
+            android:visibility="@{word.showJlptTag()}"
+            app:chipBackgroundColor="@color/green_500"
+            app:layout_constraintStart_toEndOf="@id/common_tag"
+            app:layout_constraintTop_toTopOf="@id/bottom_barrier"
+            tools:text="JLPT - 5" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/wanikani_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{word.tags[0]}"
+            android:visibility="@{word.showOtherTag()}"
+            app:chipBackgroundColor="@color/blue_100"
+            app:layout_constraintStart_toEndOf="@id/jlpt_tag"
+            app:layout_constraintTop_toTopOf="@id/bottom_barrier"
+            tools:text="wanikani34" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/tag_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="wanikani_tag,jlpt_tag,common_tag" />
+
+        <TextView
+            android:id="@+id/tv_part_of_speech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{word.showFirstSense().showPartsOfSpeech()}"
+            android:textSize="@dimen/text_middle"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tag_barrier"
+            tools:text="-な adjective" />
+
+        <TextView
+            android:id="@+id/tv_see_also"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{word.showFirstSense().seeAlso[0]}"
+            android:textSize="@dimen/text_middle"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_part_of_speech"
+            tools:text="Take a look at this boiiii" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

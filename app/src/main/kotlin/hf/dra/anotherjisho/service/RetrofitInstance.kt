@@ -5,12 +5,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-    val retrofit by lazy {
+    val retrofit: ServiceJisho by lazy {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
             .build()
             .create(ServiceJisho::class.java)
     }
-
 }

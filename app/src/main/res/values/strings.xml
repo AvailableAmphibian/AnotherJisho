@@ -2,9 +2,11 @@
     <string name="app_name">AnotherJisho</string>
     <string name="type_your_query_here">Type your query here</string>
     <string name="search">Search</string>
-    <string name="querying">Querying...</string>
+    <string name="querying">Querying…</string>
     <string name="no_results_in_your_query">No results in your query.</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="search_another_word">Search another word</string>
     <string name="arrow">➤</string>
+    <string name="kanjis">Kanjis</string>
+    <string name="common_word">Common word</string>
 </resources>

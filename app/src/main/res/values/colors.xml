@@ -10,4 +10,6 @@
 
     <color name="green_500">#5AE660</color>
     <color name="green_200">#5FF660</color>
+    <color name="red">#F44336</color>
+    <color name="blue_100">#BBDEFB</color>
 </resources>
